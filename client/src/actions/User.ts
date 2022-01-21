@@ -16,13 +16,12 @@ export const registration:Function = async (email:string, password:string) => {
 
 
 export const login:Function = (email:string, password:string) => {
-    // @ts-ignore
-    return async dispatch => {
+    return async function (dispatch:Function) {
         try{
             const response = await axios.post('/api/auth/login', {
-                email,
-                password
-            })
+            email,
+            password
+        })
             console.log(response.data)
         }catch (e) {
             console.log(e)
