@@ -4,8 +4,9 @@ const myTheme: DefaultTheme = {
     borderRadius: '5px',
 
     colors: {
-        mainColor: '#ffffff',
-        secondaryColor: 'green'
+        mainColor: '#000000',
+        mainTextColor: '#000000',
+        secondaryColor: '#EAEAEA'
     }
 };
 
@@ -14,6 +15,7 @@ const darkTheme :DefaultTheme = {
 
     colors: {
         mainColor: '#2D2F34',
+        mainTextColor: '#ffffff',
         secondaryColor: '#1F2023'
     }
 }

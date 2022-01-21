@@ -6,9 +6,11 @@ export const DefaultGlobalStyle = createGlobalStyle`
     padding: 0;
     margin: auto;
     box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
   }
   
   a{
     text-decoration: none;
+    color: ${props => props.theme.colors.mainTextColor}
   }
 `;
