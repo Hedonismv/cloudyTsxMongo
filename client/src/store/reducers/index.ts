@@ -9,4 +9,6 @@ const rootReducer = combineReducers({
     file: fileReducer
 })
 
+export type RootState =  ReturnType<typeof rootReducer>
+
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {store} from "./reducers";
+import {store} from "./store/reducers";
 import {Provider} from "react-redux";
 import {DefaultGlobalStyle} from "./styledComponent/globalStyles";
 import {ThemeProvider} from "styled-components";

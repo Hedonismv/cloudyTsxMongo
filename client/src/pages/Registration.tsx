@@ -1,12 +1,13 @@
 import React, {FC, useState} from 'react';
 import Input from "../styledComponent/Input";
-import {registration} from "../actions/User";
 import Div from "../styledComponent/Div";
 import Button from "../styledComponent/button";
+import {useActions} from "../hooks/useActions";
 
 const Registration:FC = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const { registration} = useActions()
 
     return (
         <Div justifyContent={'center'} align={'center'} padding={'250px 0 0 0'}>
