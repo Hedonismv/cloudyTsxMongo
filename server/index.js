@@ -7,11 +7,13 @@ const PORT = config.get('serverPort')
 const mongoUrl = config.get('mongoUrl')
 
 const authRouter = require('./routes/auth.routes')
+const fileRouter = require('./routes/file.routes')
 
 //By default express cant parse the JSON data, then we need to add this
 app.use(express.json())
 
 app.use('/api/auth', authRouter)
+app.use('/api/files', fileRouter)
 
 const start = async () => {
     try{
