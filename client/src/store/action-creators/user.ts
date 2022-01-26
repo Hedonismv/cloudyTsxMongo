@@ -29,3 +29,22 @@ export const login = (email:string, password:string) => {
         }
     }
 }
+
+export const auth = () => {
+    return async (dispatch: Dispatch<UserAction>) => {
+        try{
+            const response = await axios.get('/api/auth/auth',{headers:{
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+                }})
+            dispatch({type: UserActionsTypes.SET_USER, payload: response.data.user})
+            localStorage.setItem('token', response.data.token)
+        }catch (e) {
+            console.log(e)
+            localStorage.removeItem('token')
+        }
+    }
+}
+
+
+
+export const logoutUser = ():UserAction => ({type: UserActionsTypes.LOGOUT_USER})
