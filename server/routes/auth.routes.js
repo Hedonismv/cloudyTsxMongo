@@ -4,6 +4,9 @@ const bcrypt = require('bcryptjs')
 const {check, validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const authMiddleware = require('../middleware/auth.middleware')
+const fileService = require('../services/fileServices')
+const File = require('../models/File')
 
 
 const router = Router()
@@ -36,12 +39,13 @@ router.post('/registration',[
         const user = new User({email, password: hashedPassword})
         // save user to the Database
         await user.save()
+        await fileService.createDir(new File({user: user.id, name: ''})) // Forgot import LOL
         //return the response from server
         return res.json({message: "User successfully created"})
 
     }catch (e) {
         console.log(e.message)
-        return res.status(e.code).json({message: `${e.message}`})
+        return res.status(400).json({message: `${e.message}`}) // DONT use status(e.code) - throw Error
     }
 })
 
@@ -73,6 +77,25 @@ router.post('/login', async (req,res) => {
             }
         })
 
+    }catch (e) {
+        return res.status(e.code).json({message: e.message})
+    }
+})
+
+router.get('/auth', authMiddleware, async (req,res) => {
+    try{
+        const user = await User.findOne({_id: req.user.id})
+        const token = jwt.sign({id: user.id}, config.get('secretKey'), {expiresIn: "1h"})
+        return res.json({
+            token,
+            user: {
+                id: user.id,
+                email: user.email,
+                diskSpace: user.diskSpace,
+                usedSpace: user.usedSpace,
+                avatar: user.avatar
+            }
+        })
     }catch (e) {
         return res.status(e.code).json({message: e.message})
     }
