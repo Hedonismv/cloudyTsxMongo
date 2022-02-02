@@ -5,16 +5,20 @@ import styled from "styled-components";
 
 interface InputProps{
     type:string,
-    placeholder: string,
+    placeholder?: string,
     value?:string,
     func?: any,
     width?:string,
     padding?:string,
-    margin?:string
+    margin?:string,
+    display?:string,
+    id?:string,
+    multiple?:boolean
 }
 
 const StyledInput = styled.input<InputProps>`
   width: ${({width}) => width || '100%'};
+  display: ${props => props.display || ''};
   padding: ${({padding}) => padding || '0'};
   margin: ${({margin}) => margin || '0'};
   border-color: ${props => props.theme.colors.secondaryColor};
@@ -33,7 +37,7 @@ const StyledInput = styled.input<InputProps>`
 
 const Input:FC<InputProps>= (props) => {
     return (
-        <StyledInput {...props} type={props.type} value={props.value} placeholder={props.placeholder} onChange={props.func}/>
+        <StyledInput {...props} type={props.type} value={props.value} placeholder={props.placeholder} id={props.id} onChange={props.func}/>
     );
 };
 

@@ -8,13 +8,15 @@ interface ButtonProps{
     func?: any,
     width?:string,
     padding?:string,
-    margin?:string
+    margin?:string,
+    alignSelf?:string
 }
 
 const StyledButton = styled.button<ButtonProps>`
   padding: ${({padding}) => padding || '0'};
   margin: ${({margin}) => margin || '0'};
   border-color: ${props => props.theme.colors.secondaryColor};
+  align-self: ${props => props.alignSelf || ''};
   border-style: solid;
   border-width: 1px;
   border-radius: 5px;

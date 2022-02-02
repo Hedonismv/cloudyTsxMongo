@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 
 interface DivProps {
     display?:string,
@@ -11,7 +11,7 @@ interface DivProps {
     gap?:string,
     position?:string,
     left?:string,
-    top?:string
+    top?:string,
 }
 
 const StyledDiv = styled.div<DivProps>`
@@ -21,7 +21,8 @@ const StyledDiv = styled.div<DivProps>`
   flex-direction: ${props => props.direction || 'row'};
   margin: ${({margin}) => margin || '0'};
   padding: ${({padding}) => padding || '0'};
-  gap: ${props => props.gap || 'none'};
+  gap: ${props => props.gap || ''};
+  
 `
 
 const Div:FC<DivProps> = (props) => {
