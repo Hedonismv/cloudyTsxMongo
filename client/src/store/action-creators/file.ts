@@ -76,14 +76,11 @@ export function downloadFile(file:IFile){
             })
             if(response.status === 200){
                 const blob = await response.blob()
-                console.log(blob)
                 const downloadUrl = window.URL.createObjectURL(blob)
-                console.log(downloadUrl)
                 const link = document.createElement('a')
                 link.href = downloadUrl
                 link.download = file.name
                 document.body.appendChild(link)  // with this stroke throwing DOMException error need add document.body.appendChild(link)
-                console.log(link)
                 link.click()
                 link.remove()
             }
