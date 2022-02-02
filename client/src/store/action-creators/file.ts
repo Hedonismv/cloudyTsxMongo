@@ -1,4 +1,4 @@
-import {FileAction, FileActionsTypes} from "../../types/file";
+import {FileAction, FileActionsTypes, IFile} from "../../types/file";
 import axios from "axios";
 import {Dispatch} from "react";
 
@@ -65,32 +65,58 @@ export function uploadFile(file:any, dirId:any){
     }
 }
 
+//this function don't throw Actions must be plain objects. Use custom middleware for async actions. Error
+export function downloadFile(file:IFile){
+    return async (dispatch:Dispatch<FileAction>) => {
+        try{
+            const response = await fetch(`api/files/download?id=${file._id}`,{
+                headers:{
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            if(response.status === 200){
+                const blob = await response.blob()
+                console.log(blob)
+                const downloadUrl = window.URL.createObjectURL(blob)
+                console.log(downloadUrl)
+                const link = document.createElement('a')
+                link.href = downloadUrl
+                link.download = file.name
+                document.body.appendChild(link)  // with this stroke throwing DOMException error need add document.body.appendChild(link)
+                console.log(link)
+                link.click()
+                link.remove()
+            }
+        }catch (e) {
+            console.log(e)
+        }
+    }
+}
 
-// export function uploadFiles(file:any, dirId:any) {
-//     return async (dispatch: Dispatch<FileAction>) => {
-//         try {
-//             const formData = new FormData()
-//             formData.append('file', file)
-//             if (dirId) {
-//                 formData.append('parent', dirId)
-//             }
-//             const response = await axios.post(`api/files/upload`, formData, {
-//                 headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
-//                 onUploadProgress: progressEvent => {
-//                     const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
-//                     console.log('total', totalLength)
-//                     if (totalLength) {
-//                         let progress = Math.round((progressEvent.loaded * 100) / totalLength)
-//                         console.log(progress)
-//                     }
-//                 }
-//             });
-//             dispatch(addFile(response.data))
-//         } catch (e) {
-//             // @ts-ignore
-//             alert(e.response.data.message)
+//But this throw Error Actions must be plain objects. Use custom middleware for async actions.
+
+
+// export async function downloadFile(file:IFile){
+//     const response = await fetch(`api/files/download?id=${file._id}`,{
+//         headers:{
+//             Authorization: `Bearer ${localStorage.getItem('token')}`
 //         }
+//     })
+//     if (response.status === 200){
+//         const blob = await response.blob()
+//         console.log(blob)
+//         const downloadUrl = window.URL.createObjectURL(blob)
+//         console.log(downloadUrl)
+//         const link = document.createElement('a')
+//         link.href = downloadUrl
+//         link.download = file.name
+//         document.body.appendChild(link)  // with this stroke throwing DOMException error need add document.body.appendChild(link)
+//         console.log(link)
+//         link.click()
+//         link.remove()
+//         return response
 //     }
+//     return response
 // }
 
 
