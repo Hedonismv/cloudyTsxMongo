@@ -18,6 +18,8 @@ interface GridDivProps {
     justifySelf?:string,
     border?:string,
     row?: boolean,
+    five?:boolean,
+    six?:boolean,
     click?:any
 }
 
@@ -33,6 +35,20 @@ const StyledGridDiv = styled.div<GridDivProps>`
   
   ${props => props.row && css`
     border-bottom: 2px solid ${myTheme.colors.secondaryColor};
+    cursor: pointer;
+    
+    &:hover{
+      &five{
+        
+      }
+    }
+  `}
+
+  ${props => props.five && css`
+    grid-column-start: 5;
+  `}
+  ${props => props.six && css`
+    grid-column-start: 6;
   `}
 `
 

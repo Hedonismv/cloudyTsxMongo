@@ -9,7 +9,8 @@ interface ButtonProps{
     width?:string,
     padding?:string,
     margin?:string,
-    alignSelf?:string
+    alignSelf?:string,
+    className?:string
 }
 
 const StyledButton = styled.button<ButtonProps>`
@@ -23,6 +24,14 @@ const StyledButton = styled.button<ButtonProps>`
   transition: 0.4s ease-out;
   cursor: pointer;
   
+  .download_btn{
+    display: none;
+  }
+
+  .delete_btn{
+    display: none;
+  }
+  
   &:hover{
     background-color: ${props => props.theme.colors.mainColor};
     color: ${props => props.theme.colors.secondaryColor};
@@ -32,7 +41,7 @@ const StyledButton = styled.button<ButtonProps>`
 
 const Button:FC<ButtonProps>= (props) => {
     return (
-        <StyledButton {...props} type={props.type} onClick={props.func}/>
+        <StyledButton {...props} type={props.type} onClick={props.func} className={props.className}/>
     );
 };
 

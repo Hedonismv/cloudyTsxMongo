@@ -12,6 +12,9 @@ interface DivProps {
     position?:string,
     left?:string,
     top?:string,
+    onDragEnter?:any,
+    onDragOver?:any,
+    onDragLeave?:any
 }
 
 const StyledDiv = styled.div<DivProps>`
